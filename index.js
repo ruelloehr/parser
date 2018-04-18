@@ -12,7 +12,7 @@ var args = argv.usage('Parse a zip file and produce an output file which contain
     .demand('f', 'Filename of zip archive')
     .alias('f', 'filename')
     .describe('f', 'Filename of zip archive containing mail data')
-    .argv;1
+    .argv;
 
 var errorFunc = err =>  console.log('Error occurred: ' + err);
 
@@ -46,22 +46,14 @@ fs.createReadStream(args.f)
             rl.on('line', function (line) {
                 if ((headerValue.length > 0) && ((line.toLowerCase().indexOf('to:') === 0) || (line.toLowerCase().indexOf('from:') === 0) || (line.toLowerCase().indexOf('subject:') === 0))) {
                     fs.write(fd, rfc2047.decode(headerValue)+os.EOL);
-                    console.log('Wrote ' + headerValue);
                     headerValue = line;
-                    console.log('situation 1: ' + line );
                 }
                 else if ((line.toLowerCase().indexOf('to:') === 0) || (line.toLowerCase().indexOf('from:') === 0) || (line.toLowerCase().indexOf('subject:') === 0)) {
-                    //fs.write(fd, line+os.EOL);
                     headerValue = line;
-                    console.log('found a new header ' + line );
                 } else if ((line.indexOf(' ') === 0) && headerValue.length > 0)  {
-                    console.log('in situation 2: ' + line);
                     headerValue +=line;
-                    console.log(headerValue);
                 } else if (headerValue.length > 0) {
-                   console.log('in sitation 3');
                     fs.write(fd, rfc2047.decode(headerValue)+os.EOL);
-                    console.log('Wrote: ' + headerValue);
                     headerValue='';
                 }
             });
