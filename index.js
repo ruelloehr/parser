@@ -6,6 +6,7 @@ const os = require("os");
 const tar = require('tar-stream');
 const zlib = require('zlib');
 const rfc2047 = require('rfc2047');
+const mailutils = require('./lib/mailutils.js');
 
 var args = argv.usage('Parse a zip file and produce an output file which contains a collection of mail headers for each entry in the zip. \nUsage: $0 -f filename')
     .example('$0 -f filename')
@@ -14,7 +15,7 @@ var args = argv.usage('Parse a zip file and produce an output file which contain
     .describe('f', 'Filename of zip archive containing mail data')
     .argv;
 
-var errorFunc = err =>  console.log('Error occurred: ' + err);
+var errorFunc = err => console.log('Error occurred: ' + err);
 
 var extract = tar.extract();
 
@@ -30,34 +31,23 @@ fs.createReadStream(args.f)
         //stream is a stream pointing to the content of the tar entry
         //next is a function to call when we are done processing the entry
 
-        var headerValue = '';
-
+        var prevHeaderLine = '';
 
         //tars can contain files and directories, we only want to process files
         if (header.type === 'file') {
 
             console.log('Processing file: ' + header.name);
+
+            //readline streams data line by line based on newlines
             var rl = readline.createInterface({
                 input: stream
             });
 
-            // Mail headers spec: http://www.ietf.org/rfc/rfc2822.txt
-            // Encoding headers spec: https://www.ietf.org/rfc/rfc2047.txt
             rl.on('line', function (line) {
-                if ((headerValue.length > 0) && ((line.toLowerCase().indexOf('to:') === 0) || (line.toLowerCase().indexOf('from:') === 0) || (line.toLowerCase().indexOf('subject:') === 0))) {
-                    fs.write(fd, rfc2047.decode(headerValue)+os.EOL);
-                    headerValue = line;
-                }
-                else if ((line.toLowerCase().indexOf('to:') === 0) || (line.toLowerCase().indexOf('from:') === 0) || (line.toLowerCase().indexOf('subject:') === 0)) {
-                    headerValue = line;
-                } else if ((line.indexOf(' ') === 0) && headerValue.length > 0)  {
-                    headerValue +=line;
-                } else if (headerValue.length > 0) {
-                    fs.write(fd, rfc2047.decode(headerValue)+os.EOL);
-                    headerValue='';
-                }
+                prevHeaderLine = mailutils.processDataLine(line, prevHeaderLine, fd);
             });
 
+            rl.on('error', errorFunc);
         }
 
         stream.on('end', function () {
