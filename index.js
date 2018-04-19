@@ -1,3 +1,4 @@
+"use strict";
 const argv = require('yargs');
 const fs = require('fs');
 const stream = require('stream');
@@ -8,18 +9,16 @@ const zlib = require('zlib');
 const rfc2047 = require('rfc2047');
 const mailutils = require('./lib/mailutils.js');
 
-var args = argv.usage('Parse a zip file and produce an output file which contains a collection of mail headers for each entry in the zip. \nUsage: $0 -f filename')
+let args = argv.usage('Parse a zip file and produce an output file which contains a collection of mail headers for each entry in the zip. \nUsage: $0 -f filename')
     .example('$0 -f filename')
     .demand('f', 'Filename of zip archive')
     .alias('f', 'filename')
     .describe('f', 'Filename of zip archive containing mail data')
     .argv;
 
-var errorFunc = err => console.log('Error occurred: ' + err);
-
-var extract = tar.extract();
-
-fd = fs.openSync('output.txt', 'w');
+let errorFunc = err => console.log('Error occurred: ' + err);
+let extract = tar.extract();
+let fd = fs.openSync('output.txt', 'w');
 
 fs.createReadStream(args.f)
     .on('error', errorFunc)
@@ -39,7 +38,7 @@ fs.createReadStream(args.f)
             console.log('Processing file: ' + header.name);
 
             //readline streams data line by line based on newlines
-            var rl = readline.createInterface({
+            let rl = readline.createInterface({
                 input: stream
             });
 

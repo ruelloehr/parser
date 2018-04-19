@@ -35,7 +35,7 @@ describe('Processing headers', function() {
         it('Should handle folded headers', function() {
             var results = mailutils.processDataLine('To: Ruel Loehr <ruelloehr@gmail.com>', '', fd);
             var secondLine = mailutils.processDataLine('  has a folded header', results, fd);
-            assert.equal(secondLine, 'To: Ruel Loehr <ruelloehr@gmail.com>  has a folded header');
+            assert.equal(secondLine, 'To: Ruel Loehr <ruelloehr@gmail.com> has a folded header');
         });
     });
 
