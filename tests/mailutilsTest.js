@@ -34,4 +34,16 @@ describe('RFC2074 encoding', function() {
             assert.equal(mailutils.decodeRFC2407('From: =?utf-8?q?Aviva?= <aviva@avivaemail.co.uk>'),  'From: Aviva <aviva@avivaemail.co.uk>');
         });
     });
+
+    describe('Base64 encoded headers should work', function() {
+        it('Should correctly decode base64 header contents', function(){
+            assert.equal(mailutils.decodeRFC2407('Subject: =?UTF-8?B?4pyIIEJvc3RvbiBhaXJmYXJlIGRlYWxzIC0gd2hpbGUgdGhleSBsYXN0IQ==?='),  'Subject: ✈ Boston airfare deals - while they last!');
+        });
+    });
+
+
+
+
 });
+
+
