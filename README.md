@@ -12,5 +12,7 @@ To install:
  * nvm install v4.6.2
  * nvm use v4.6.2
  * npm install
- * node index.js -f resources/sampleEmails4tar.gz -o output.txt
+ * node index.js -f resources/sampleEmails4tar.gz 
+ 
+ Output is written to the ./output.txt
 
