@@ -41,7 +41,7 @@ echo "building code $tag"'''
 
 
                         sh "git tag ${BUILD_ID}_${GIT_COMMIT}"
-                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@$<REPO> --tags"
+                        sh "git push --tags"
                     }
 
         echo 'generate youtrack'
