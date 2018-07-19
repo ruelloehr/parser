@@ -26,8 +26,7 @@ pipeline {
         }
         stage('Manual Testing') {
           steps {
-            input 'all good'
-            echo 'all good'
+            echo 'manual testing'
           }
         }
       }
