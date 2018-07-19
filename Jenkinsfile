@@ -39,6 +39,7 @@ pipeline {
     stage('Deploy To Production') {
       steps {
         input(message: 'Ready for deploy to prod?', id: '1', ok: 'Ok')
+        echo 'deploy to www'
       }
     }
   }
