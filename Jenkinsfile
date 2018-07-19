@@ -36,6 +36,14 @@ echo "building code $tag"'''
     stage('Tag Build') {
       steps {
         echo 'tag build'
+
+           withCredentials([usernamePassword(credentialsId: 'ruelloehr@gmail.com', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+
+
+                        sh "git tag ${BUILD_ID}_${GIT_COMMIT}"
+                        sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@${repository} ${BUILD_ID}_${GIT_COMMIT}"
+                    }
+
         echo 'generate youtrack'
       }
     }
