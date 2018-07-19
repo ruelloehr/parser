@@ -18,13 +18,28 @@ pipeline {
       }
     }
     stage('Manual Testing') {
-      steps {
-        echo 'Run Manual tests'
+      parallel {
+        stage('Manual Testing') {
+          steps {
+            echo 'Run Manual tests'
+          }
+        }
+        stage('Manual Testing') {
+          steps {
+            input 'all good'
+            echo 'all good'
+          }
+        }
       }
     }
     stage('Tag Build') {
       steps {
         echo 'tag build'
+      }
+    }
+    stage('Deploy To Production') {
+      steps {
+        input(message: 'Ready for deploy to prod?', id: '1', ok: 'Ok', submitter: 'person', submitterParameter: 'person')
       }
     }
   }
