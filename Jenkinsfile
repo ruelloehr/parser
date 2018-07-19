@@ -15,10 +15,12 @@ echo "building code $tag"'''
       }
     }
     stage('Deploy to stage') {
+    steps {
   input "Deploy?"
   milestone()
   node {
     echo "Deploying"
+  }
   }
     }
     stage('Manual Testing') {
