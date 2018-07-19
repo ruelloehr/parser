@@ -7,17 +7,9 @@ pipeline {
       }
     }
     stage('Run Tests') {
-      parallel {
-        stage('Run Tests') {
-          steps {
-            echo 'running unit tests'
-          }
-        }
-        stage('') {
-          steps {
-            echo 'Run integration tests'
-          }
-        }
+      steps {
+        echo 'running unit tests'
+        echo 'Run integration tests'
       }
     }
   }
