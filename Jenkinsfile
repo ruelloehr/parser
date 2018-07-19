@@ -26,18 +26,12 @@ echo "building code $tag"'''
     }
     stage('Manual Testing') {
     agent { label 'slave' }
-      parallel {
+
         stage('Manual Testing') {
           steps {
             echo 'Run Manual tests'
           }
         }
-        stage('Manual Testing') {
-          steps {
-            echo 'manual testing'
-          }
-        }
-      }
     }
     stage('Tag Build') {
     agent { label 'slave' }
