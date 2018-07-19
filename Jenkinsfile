@@ -34,6 +34,7 @@ pipeline {
     stage('Tag Build') {
       steps {
         echo 'tag build'
+        echo 'generate youtrack'
       }
     }
     stage('Deploy To Production') {
