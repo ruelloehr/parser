@@ -12,5 +12,10 @@ pipeline {
         echo 'Run integration tests'
       }
     }
+    stage('Deploy to stage') {
+      steps {
+        echo 'Deploy to stage'
+      }
+    }
   }
 }
