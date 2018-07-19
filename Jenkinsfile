@@ -18,9 +18,8 @@ echo "building code $tag"'''
     steps {
   input "Deploy to stage?"
   milestone(1)
-  node {
-    echo "Deploying"
-  }
+  echo "Deploying"
+
   }
     }
     stage('Manual Testing') {
