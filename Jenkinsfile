@@ -37,9 +37,6 @@ echo "building code $tag"'''
       steps {
         echo 'tag build'
 
-        import jenkins.model.*
-        jenkins = Jenkins.instance
-
            withCredentials([usernamePassword(credentialsId: 'github2', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 
 
