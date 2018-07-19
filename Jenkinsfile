@@ -22,5 +22,10 @@ pipeline {
         echo 'Run Manual tests'
       }
     }
+    stage('Tag Build') {
+      steps {
+        echo 'tag build'
+      }
+    }
   }
 }
