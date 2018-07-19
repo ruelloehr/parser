@@ -38,7 +38,7 @@ pipeline {
     }
     stage('Deploy To Production') {
       steps {
-        input(message: 'Ready for deploy to prod?', id: '1', ok: 'Ok', submitter: 'person', submitterParameter: 'person')
+        input(message: 'Ready for deploy to prod?', id: '1', ok: 'Ok')
       }
     }
   }
