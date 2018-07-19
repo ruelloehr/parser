@@ -17,6 +17,7 @@ echo "building code $tag"'''
     stage('Deploy to stage') {
       steps {
         echo 'Deploy to stage'
+        input(message: 'should we deploy', id: '2')
       }
     }
     stage('Manual Testing') {
@@ -36,13 +37,10 @@ echo "building code $tag"'''
     stage('Tag Build') {
       steps {
         echo 'tag build'
-
-           withCredentials([usernamePassword(credentialsId: 'github2', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-
-
-                        sh "git tag ${BUILD_ID}_${GIT_COMMIT}"
-                        sh "git push --tags"
-                    }
+        withCredentials(bindings: [usernamePassword(credentialsId: 'github2', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+          sh "git tag ${BUILD_ID}_${GIT_COMMIT}"
+          sh 'git push --tags'
+        }
 
         echo 'generate youtrack'
       }
