@@ -10,6 +10,7 @@ pipeline {
       steps {
         echo 'running unit tests'
         echo 'Run integration tests'
+        sh 'printenv'
       }
     }
     stage('Deploy to stage') {
