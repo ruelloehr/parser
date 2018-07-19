@@ -15,10 +15,11 @@ echo "building code $tag"'''
       }
     }
     stage('Deploy to stage') {
-      steps {
-        echo 'Deploy to stage'
-        input(message: 'should we deploy', id: '2')
-      }
+  input "Deploy?"
+  milestone()
+  node {
+    echo "Deploying"
+  }
     }
     stage('Manual Testing') {
       parallel {
