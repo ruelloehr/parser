@@ -17,5 +17,10 @@ pipeline {
         echo 'Deploy to stage'
       }
     }
+    stage('Manual Testing') {
+      steps {
+        echo 'Run Manual tests'
+      }
+    }
   }
 }
