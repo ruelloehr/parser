@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build Code') {
       steps {
-        sh '''tag = $BUILD_TAG$GIT_COMMIT
+        sh '''tag=$BUILD_TAG$GIT_COMMIT
 echo "building code $tag"'''
       }
     }
