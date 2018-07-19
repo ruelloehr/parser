@@ -1,8 +1,7 @@
 pipeline {
-  agent none
+  agent any
   stages {
     stage('Build Code') {
-    agent { label 'slave' }
       steps {
         sh '''tag=$BUILD_TAG$GIT_COMMIT
 echo "building code $tag"'''
@@ -16,7 +15,6 @@ echo "building code $tag"'''
       }
     }
     stage('Deploy to stage') {
-    agent none
     steps {
   input "Deploy to stage?"
   milestone(1)
@@ -25,14 +23,20 @@ echo "building code $tag"'''
   }
     }
     stage('Manual Testing') {
-    agent { label 'slave' }
-
+      parallel {
+        stage('Manual Testing') {
           steps {
             echo 'Run Manual tests'
           }
+        }
+        stage('Manual Testing') {
+          steps {
+            echo 'manual testing'
+          }
+        }
+      }
     }
     stage('Tag Build') {
-    agent { label 'slave' }
       steps {
         echo 'tag build'
         withCredentials(bindings: [usernamePassword(credentialsId: 'github2', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
@@ -44,7 +48,6 @@ echo "building code $tag"'''
       }
     }
     stage('Deploy To Production') {
-    agent none
       steps {
         input(message: 'Ready for deploy to prod?', id: '1', ok: 'Ok')
         echo 'deploy to www'
