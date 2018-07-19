@@ -1,11 +1,6 @@
 pipeline {
   agent any
 
-     triggers {
-          pollSCM pipelineParams.polling
-      }
-
-
 
   stages {
     stage('Build Code') {
