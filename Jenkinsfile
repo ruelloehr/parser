@@ -37,7 +37,7 @@ echo "building code $tag"'''
       steps {
         echo 'tag build'
 
-           withCredentials([usernamePassword(credentialsId: 'ruelloehr@gmail.com', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+           withCredentials([usernamePassword(credentialsId: 'github2', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
 
 
                         sh "git tag ${BUILD_ID}_${GIT_COMMIT}"
