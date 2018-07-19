@@ -6,5 +6,10 @@ pipeline {
         sh 'echo "building code"'
       }
     }
+    stage('Run Tests') {
+      steps {
+        echo 'running unit tests'
+      }
+    }
   }
 }
