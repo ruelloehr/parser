@@ -1,6 +1,5 @@
 pipeline {
-  agent
-
+  agent any
 
      triggers {
           pollSCM pipelineParams.polling
