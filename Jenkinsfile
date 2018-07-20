@@ -1,7 +1,5 @@
 pipeline {
   agent any
-
-
   stages {
     stage('Build Code') {
       steps {
@@ -17,12 +15,11 @@ echo "building code $tag"'''
       }
     }
     stage('Deploy to stage') {
-    steps {
-  input "Deploy to stage?"
-  milestone(1)
-  echo "Deploying"
-
-  }
+      steps {
+        input 'Deploy to stage?'
+        milestone 1
+        echo 'Deploying'
+      }
     }
     stage('Manual Testing') {
       parallel {
@@ -53,6 +50,11 @@ echo "building code $tag"'''
       steps {
         input(message: 'Ready for deploy to prod?', id: '1', ok: 'Ok')
         echo 'deploy to www'
+      }
+    }
+    stage('Shutdown workers') {
+      steps {
+        echo 'shutdown'
       }
     }
   }
